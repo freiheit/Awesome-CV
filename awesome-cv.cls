@@ -161,7 +161,8 @@
 %                Configuration for fonts
 %-------------------------------------------------------------------------------
 % Set the FontAwesome font to be up-to-date.
-\newfontfamily\FA[Path=\@fontdir]{FontAwesome}
+% conflicts with dupe in fontawesome.sty
+% \newfontfamily\FA[Path=\@fontdir]{FontAwesome}
 % Set font for header (default is Roboto)
 \newfontfamily\headerfont[
   Path=\@fontdir,
@@ -298,6 +299,12 @@
 %   e.g.https://stackoverflow.com/users/123456/sam-smith
 %       would be \stackoverflow{123456}{sam-smith}
 \newcommand*{\stackoverflow}[2]{\def\@stackoverflowid{#1}\def\@stackoverflowname{#2}}
+
+% Defines writer's serverfault profile (optional)
+% Usage: \serverfault{<sf userid>}{<sf username>}
+%   e.g.https://serverfault.com/users/123456/sam-smith
+%       would be \serverfault{123456}{sam-smith}
+\newcommand*{\serverfault}[2]{\def\@serverfaultid{#1}\def\@serverfaultname{#2}}
 
 % Defines writer's linked-in (optional)
 % Usage: \linkedin{<linked-in-nick>}
@@ -490,6 +497,12 @@
         {%
           \ifbool{isstart}{\setbool{isstart}{false}}{\acvHeaderSocialSep}%
           \href{https://stackoverflow.com/users/\@stackoverflowid}{\faStackOverflow\acvHeaderIconSep\@stackoverflowname}%
+        }%
+      \ifthenelse{\isundefined{\@serverfaultid}}%
+        {}%
+        {%
+          \ifbool{isstart}{\setbool{isstart}{false}}{\acvHeaderSocialSep}%
+          \href{https://serverfault.com/users/\@serverfaultid}{\faServer\acvHeaderIconSep\@serverfaultname}%
         }%
       \ifthenelse{\isundefined{\@linkedin}}%
         {}%
